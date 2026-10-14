@@ -1,0 +1,389 @@
+{% extends 'Store/base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- Stripe Official Library (VERY IMPORTANT) -->
+<script src="https://js.stripe.com/v3/" defer></script>
+
+<!-- Your Custom JS -->
+<script src="{% static 'js/main.js' %}"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+<script defer src="https://use.fontawesome.com/releases/v6.4.0/js/all.js"></script>
+
+<style>
+  /* Make both cards equal height and responsive */
+  .checkout-card {
+    height: 100%;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    background: #ffffff;
+    padding: 2rem 1.5rem;
+  }
+  .checkout-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+  }
+  .card-title {
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: #1a1a2e;
+    border-bottom: 2px solid #f0f0f5;
+    padding-bottom: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+  .form-control {
+    border-radius: 10px;
+    border: 1.5px solid #e2e2ea;
+    padding: 0.7rem 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .form-control:focus {
+    border-color: #6c63ff;
+    box-shadow: 0 0 0 4px rgba(108, 99, 255, 0.1);
+  }
+  .stripe-btn {
+    background: #1a1a2e;
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    padding: 0.75rem 2.5rem;
+    font-weight: 600;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .stripe-btn:hover {
+    background: #2a2a4e;
+    transform: scale(1.02);
+  }
+  .summary-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #f0f0f5;
+  }
+  .summary-item:last-child {
+    border-bottom: none;
+  }
+  .summary-item img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 10px;
+    background: #f8f8fc;
+  }
+  .summary-item .details {
+    flex: 1;
+  }
+  .summary-item .details .title {
+    font-weight: 500;
+    color: #1a1a2e;
+  }
+  .summary-item .details .meta {
+    font-size: 0.85rem;
+    color: #888;
+  }
+  .summary-item .details .price {
+    font-weight: 600;
+    color: #6c63ff;
+  }
+  .summary-totals {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 2px solid #f0f0f5;
+  }
+  .summary-totals .line {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.4rem 0;
+    font-size: 1rem;
+  }
+  .summary-totals .line.total {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    border-top: 1px solid #ddd;
+    padding-top: 0.75rem;
+    margin-top: 0.5rem;
+  }
+  .summary-totals .line.total span {
+    color: #6c63ff;
+  }
+  .back-link {
+    display: inline-block;
+    margin-top: 1.2rem;
+    color: #6c63ff;
+    font-weight: 500;
+    text-decoration: none;
+  }
+  .back-link:hover {
+    text-decoration: underline;
+  }
+  /* Responsive tweaks */
+  @media (max-width: 992px) {
+    .checkout-card {
+      margin-bottom: 1.5rem;
+    }
+  }
+</style>
+
+<div class="container my-5">
+  <div class="row g-4">
+    <!-- LEFT CARD: Shipping + Payment -->
+    <div class="col-lg-6">
+      <div class="checkout-card">
+      <h4 class="card-title"><i class="fas fa-truck me-2"></i>Shipping Information</h4>
+        <div class="form-group mb-3">
+    <label for="addressDropdown"><strong>Select a Previous Address</strong></label>
+    <select class="form-control" id="addressDropdown">
+        <option value="">-- Select Address --</option>
+        <!-- Options will be injected here by JavaScript -->
+    </select>
+</div>
+
+<!-- Your Shipping Form Inputs (Make sure your IDs match these) -->
+<div class="form-group mb-3">
+    <input type="text" id="streetAddress" class="form-control" placeholder="Address.." name="address">
+</div>
+<div class="form-group mb-3">
+    <input type="text" id="city" class="form-control" placeholder="City.." name="city">
+</div>
+<div class="form-group mb-3">
+    <input type="text" id="state" class="form-control" placeholder="State.." name="state">
+</div>
+<div class="form-group mb-3">
+    <input type="text" id="postalCode" class="form-control" placeholder="Zip code.." name="zipcode">
+</div>
+        <hr class="my-4">
+
+   <div class="payment-section">
+    <h4 class="card-title" style="border-bottom: none; padding-bottom: 0; margin-bottom: 1rem;">
+        <i class="fas fa-credit-card me-2"></i>Payment Options
+    </h4>
+    <form action="{% url 'create_checkout_session' %}" method="POST">
+        {% csrf_token %}
+        <button id="submitBtn" class="stripe-btn" type="button">
+            <i class="fab fa-stripe me-2"></i> Pay with Stripe
+        </button>
+    </form>
+    <p class="text-muted small mt-2">
+        <i class="fas fa-lock me-1"></i>Secure • No card details stored
+    </p>
+</div>
+        <a href="{% url 'cart' %}" class="back-link">
+          <i class="fas fa-arrow-left me-1"></i>Back to Cart
+        </a>
+      </div>
+    </div>
+
+    <!-- RIGHT CARD: Order Summary -->
+    <div class="col-lg-6">
+      <div class="checkout-card">
+        <h4 class="card-title"><i class="fas fa-receipt me-2"></i>Order Summary</h4>
+
+        <!-- Selected Items -->
+        <div id="order-items">
+          {% for item in selected_items %}
+          <div class="summary-item">
+            <img src="{{ item.product.ImageUrl }}" alt="{{ item.product.title }}">
+            <div class="details">
+              <div class="title">{{ item.product.title }}</div>
+              <div class="meta">
+                Qty: {{ item.quantity }} &bull; ₹ {{ item.product.price }} each
+              </div>
+              <div class="price">₹ {{ item.getitemtotal }}</div>
+            </div>
+          </div>
+          {% empty %}
+          <p class="text-danger text-center py-3">
+            <i class="fas fa-exclamation-circle me-1"></i>No items selected.
+            <a href="{% url 'cart' %}" class="text-decoration-underline">Go back</a> and choose items.
+          </p>
+          {% endfor %}
+        </div>
+
+        <!-- Totals -->
+        <div class="summary-totals">
+          <div class="line">
+            <span>Items:</span>
+            <span>{{ selected_items|length }}</span>
+          </div>
+          <div class="line">
+            <span>Subtotal:</span>
+            <span>₹ {{ order_total|default:0 }}</span>
+          </div>
+          <div class="line">
+            <span>Shipping Charges:</span>
+            <span>₹ 0.00</span>
+          </div>
+          <div class="line total">
+            <span>Total:</span>
+            <span>₹ {{ order_total|default:0 }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<script>
+    // 1. Fetch dynamic addresses from Django backend safely
+    // This takes the JSON string from views.py and converts it back into a JS array
+    const savedAddresses = JSON.parse('{{ addresses_json|escapejs }}');
+
+    // 2. Get DOM elements
+    const addressDropdown = document.getElementById('addressDropdown');
+    const streetAddressInput = document.getElementById('streetAddress');
+    const cityInput = document.getElementById('city');
+    const stateInput = document.getElementById('state');
+    const postalCodeInput = document.getElementById('postalCode');
+
+    // 3. Populate the dropdown dynamically on page load
+    savedAddresses.forEach((address, index) => {
+        const option = document.createElement('option');
+        option.value = index;
+        option.textContent = `${address.label} - ${address.street}, ${address.city}`;
+        addressDropdown.appendChild(option);
+    });
+
+    // 4. Handle the dropdown selection change
+    addressDropdown.addEventListener('change', function () {
+        const selectedIndex = this.value;
+
+        if (selectedIndex !== "") {
+            const selectedAddress = savedAddresses[selectedIndex];
+
+            // Auto-fill the inputs (ensure IDs match your HTML)
+            streetAddressInput.value = selectedAddress.street;
+            cityInput.value = selectedAddress.city;
+            stateInput.value = selectedAddress.state;
+            postalCodeInput.value = selectedAddress.zip;
+        } else {
+            // Clear all input fields if "-- Select Address --" is chosen
+            streetAddressInput.value = '';
+            cityInput.value = '';
+            stateInput.value = '';
+            postalCodeInput.value = '';
+        }
+    });
+</script>
+<script>
+// 1. Helper Functions
+async function fetchWithRetry(url, options = {}, retries = 3, baseDelay = 1000) {
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    try {
+      const response = await fetch(url, { ...options, credentials: 'same-origin' });
+      if (response.status >= 500 || response.status === 429) {
+        if (attempt === retries) throw new Error(`Server error ${response.status}`);
+        const delay = baseDelay * Math.pow(2, attempt - 1);
+        await new Promise(resolve => setTimeout(resolve, delay));
+        continue;
+      }
+      return response;
+    } catch (err) {
+      if (attempt === retries) throw new Error(`Network error: ${err.message}`);
+      const delay = baseDelay * Math.pow(2, attempt - 1);
+      await new Promise(resolve => setTimeout(resolve, delay));
+    }
+  }
+}
+async function safeJson(response) {
+  const contentType = response.headers.get('content-type') || '';
+  if (!contentType.includes('application/json')) {
+    throw new Error('Server did not return JSON. Please check your network connection or server status.');
+  }
+  return response.json();
+}
+
+// ==========================================
+// 2. Main Logic
+// ==========================================
+document.addEventListener('DOMContentLoaded', async () => {
+  const submitBtn = document.querySelector('#submitBtn');
+  let stripe;
+
+  // Initialize Stripe in the background as soon as the page loads
+  try {
+    const configResponse = await fetchWithRetry('/config/');
+    const configData = await safeJson(configResponse);
+    if (typeof Stripe !== 'undefined') {
+      stripe = Stripe(configData.publicKey);
+    }
+  } catch (err) {
+    console.warn('Stripe failed to initialize on load. We will try again on click.', err);
+  }
+
+ // Handle the Checkout Click
+  submitBtn.addEventListener('click', async (event) => {
+    event.preventDefault();
+    // MATCH THE EXACT IDs USED IN YOUR HTML
+    const address = document.getElementById('streetAddress')?.value?.trim();
+    const city = document.getElementById('city')?.value?.trim();
+    const state = document.getElementById('state')?.value?.trim();
+    const zipcode = document.getElementById('postalCode')?.value?.trim();
+
+    // 1. Validation Check
+    if (!address || !city || !state || !zipcode) {
+      alert("Please fill in all shipping information fields (Address, City, State, Zip code).");
+      return;
+    }
+
+    // 2. UI Update
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Processing...';
+
+    try {
+      // Fallback: If Stripe didn't load initially, try one more time
+      if (!stripe) {
+        if (typeof Stripe === 'undefined') throw new Error("Stripe library failed to load. Check your internet connection.");
+        const configResponse = await fetchWithRetry('/config/');
+        const configData = await safeJson(configResponse);
+        stripe = Stripe(configData.publicKey);
+      }
+
+      const csrfInput = document.querySelector('[name=csrfmiddlewaretoken]');
+      if (!csrfInput) throw new Error('Security token missing.');
+
+      // 3. Create Checkout Session
+      const sessionResponse = await fetchWithRetry('/create-checkout-session/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrfInput.value,
+          'Idempotency-Key': crypto.randomUUID() // Prevents duplicate charges if network drops
+        },
+        body: JSON.stringify({ address, city, state, zipcode }),
+      });
+
+      if (!sessionResponse.ok) {
+        throw new Error(`Server responded with ${sessionResponse.status}`);
+      }
+
+      const sessionData = await safeJson(sessionResponse);
+      if (sessionData.error) throw new Error(sessionData.error);
+      if (!sessionData.sessionId) throw new Error('Session ID missing from server response.');
+
+      // 4. Redirect to Stripe
+      const result = await stripe.redirectToCheckout({
+        sessionId: sessionData.sessionId,
+      });
+
+      if (result?.error) {
+        throw new Error(`Stripe redirect failed: ${result.error.message}`);
+      }
+
+    } catch (err) {
+      console.error('Checkout error:', err);
+      alert(err.message || "An error occurred during checkout. Please try again.");
+
+      // Re-enable the button so they aren't permanently stuck on "Processing..."
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = '<i class="fab fa-stripe me-2"></i> Pay with Stripe';
+    }
+  });
+});
+</script>
+
+
+{% endblock %}

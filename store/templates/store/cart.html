@@ -1,0 +1,376 @@
+{% extends 'Store/base.html' %}
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+    /* --- Cart styles --- */
+    .cart-container {
+        background: #fff;
+        border-radius: 12px;
+        padding: 20px 25px;
+        box-shadow: 0 2px 15px rgba(0,0,0,0.04);
+        margin-top: 20px;
+    }
+    .cart-summary {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        background: #f8f9fa;
+        padding: 12px 20px;
+        border-radius: 8px;
+        margin: 15px 0 25px 0;
+    }
+    .summary-left {
+        display: flex;
+        gap: 30px;
+        flex-wrap: wrap;
+    }
+    .summary-left strong {
+        font-size: 1.1rem;
+        color: #212529;
+    }
+    .cart-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.95rem;
+        background: #fff;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 1px 6px rgba(0,0,0,0.04);
+    }
+    .cart-table thead {
+        background: #f1f3f5;
+        border-bottom: 2px solid #dee2e6;
+    }
+    .cart-table th {
+        padding: 14px 12px;
+        font-weight: 600;
+        color: #495057;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 0.3px;
+        text-align: left;
+    }
+    .cart-table td {
+        padding: 14px 12px;
+        vertical-align: middle;
+        border-bottom: 1px solid #e9ecef;
+    }
+    .cart-table tr:last-child td {
+        border-bottom: none;
+    }
+    .thumb {
+        font-size: 1.8rem;
+        display: inline-block;
+        width: 44px;
+        height: 44px;
+        background: #f1f3f5;
+        border-radius: 8px;
+        line-height: 44px;
+        text-align: center;
+    }
+    .qty-input {
+        width: 60px;
+        padding: 6px 8px;
+        text-align: center;
+        border: 1px solid #ced4da;
+        border-radius: 6px;
+        font-size: 0.95rem;
+        transition: border 0.15s;
+    }
+    .qty-input:focus {
+        border-color: #80bdff;
+        outline: 0;
+        box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.25);
+    }
+    .action-btn {
+        padding: 6px 16px;
+        border: none;
+        border-radius: 30px;
+        font-weight: 500;
+        font-size: 0.8rem;
+        cursor: pointer;
+        transition: background 0.15s, transform 0.1s;
+        background: #e9ecef;
+        color: #212529;
+        margin-right: 4px;
+    }
+    .action-btn:hover {
+        transform: scale(1.02);
+    }
+    .update-btn { background: #e9ecef; }
+    .update-btn:hover { background: #dde1e6; }
+    .delete-btn { background: #f8d7da; color: #721c24; }
+    .delete-btn:hover { background: #f5c6cb; }
+    .select-check {
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+        accent-color: #0d6efd;
+    }
+    .proceed-row {
+        text-align: right;
+        margin-top: 25px;
+    }
+    .proceed-btn {
+        background: #212529;
+        color: #fff;
+        border: none;
+        padding: 12px 40px;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.2s, box-shadow 0.2s;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .proceed-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        box-shadow: none;
+    }
+    .proceed-btn:not(:disabled):hover {
+        background: #343a40;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    }
+    .toast {
+        position: fixed;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #212529;
+        color: #fff;
+        padding: 12px 28px;
+        border-radius: 40px;
+        font-size: 0.95rem;
+        display: none;
+        z-index: 1060;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+    .toast.show { display: block; }
+    .continue-link {
+        display: inline-block;
+        margin: 5px 0 10px;
+        color: #0d6efd;
+        text-decoration: none;
+        font-weight: 500;
+    }
+    .continue-link:hover {
+        text-decoration: underline;
+        color: #0a58ca;
+    }
+    .empty-cart {
+        text-align: center;
+        padding: 40px 0;
+        color: #6c757d;
+        font-size: 1.1rem;
+    }
+    .empty-cart i {
+        font-size: 3rem;
+        display: block;
+        margin-bottom: 15px;
+        color: #adb5bd;
+    }
+</style>
+
+<div class="container cart-container">
+    <!-- Continue Shopping -->
+    <a href="{% url 'home' %}" class="continue-link">
+        <i class="fas fa-arrow-left"></i> Continue Shopping
+    </a>
+
+    <!-- Summary Strip -->
+    <div class="cart-summary">
+        <div class="summary-left">
+            <strong>Items: <span id="itemsCount">{{ total_quantity|default:0 }}</span></strong>
+            <strong>Total: ₹<span id="totalAmount">{{ total_price|floatformat:1|default:"0.0" }}</span></strong>
+        </div>
+    </div>
+    <!-- Cart Table -->
+    <div class="table-responsive">
+        <table class="cart-table">
+            <thead>
+                <tr>
+                    <th style="width:60px;">Selected</th>
+                    <th style="width:60px;">Image</th>
+                    <th>Item Name</th>
+                    <th>Price</th>
+                    <th style="width:110px;">Quantity</th>
+                    <th>Total</th>
+                    <th style="width:130px;">Update</th>
+                    <th style="width:100px;">Delete</th>
+                </tr>
+            </thead>
+            <tbody id="cartBody">
+                {% for item in orditms %}
+                <tr data-item-id="{{ item.id }}">
+                    <td>
+                        <input type="checkbox" class="select-check" data-item-id="{{ item.id }}"
+                               {% if item.id in selected_ids %}checked{% endif %}>
+                    </td>
+                    <td><span class="thumb">{{ item.Product.ImageUrl|default:"📦" }}</span></td>
+                    <td><strong>{{ item.product.title }}</strong></td>
+                    <td>₹ {{ item.product.price|floatformat:1 }}</td>
+                    <td>
+                        <input type="number" class="qty-input" data-item-id="{{ item.id }}"
+                               value="{{ item.quantity }}" min="1">
+                    </td>
+                    <td class="line-total">₹ {{ item.getitemtotal|floatformat:1 }}</td>
+                    <td>
+                        <button type="button" class="action-btn update-btn" data-item-id="{{ item.id }}">
+                            <i class="fas fa-sync-alt"></i> Update
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" class="action-btn delete-btn" data-item-id="{{ item.id }}">
+                            <i class="fas fa-trash-alt"></i> Delete
+                        </button>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="8">
+                        <div class="empty-cart">
+                            <i class="fas fa-shopping-bag"></i>
+                            Your cart is empty. <br>
+                            <a href="{% url 'home' %}" class="btn btn-primary btn-sm mt-3">Start Shopping</a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Proceed Button -->
+    <div class="proceed-row">
+        <button class="proceed-btn" id="proceedBtn">
+            <i class="fas fa-lock"></i> Proceed to Checkout
+        </button>
+    </div>
+</div>
+
+<!-- Toast Notification -->
+<div class="toast" id="toast"></div>
+
+<script>
+    // --- Toast helper ---
+    function showToast(msg, type) {
+        const el = document.getElementById('toast');
+        el.textContent = msg;
+        el.style.background = type === 'error' ? '#dc3545' : '#212529';
+        el.classList.add('show');
+        clearTimeout(el._timer);
+        el._timer = setTimeout(() => el.classList.remove('show'), 3000);
+    }
+
+    // --- Update summary and proceed button ---
+    function updateSummary(data) {
+        document.getElementById('itemsCount').textContent = data.total_items;
+        document.getElementById('totalAmount').textContent = data.total_price.toFixed(1);
+        // Update proceed button state
+        const checked = document.querySelectorAll('.select-check:checked').length;
+        const btn = document.getElementById('proceedBtn');
+        if (checked === 0) {
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fas fa-lock"></i> Select at least one item`;
+        } else {
+            btn.disabled = false;
+            btn.innerHTML = `<i class="fas fa-lock"></i> Proceed to Checkout`;
+        }
+    }
+
+    // --- AJAX request ---
+    function updateCart(action, itemId, data, callback) {
+        const formData = new FormData();
+        formData.append('action', action);
+        formData.append('item_id', itemId);
+        if (data) {
+            Object.keys(data).forEach(key => formData.append(key, data[key]));
+        }
+        fetch("{% url 'update_cart_ajax' %}", {
+            method: 'POST',
+            headers: { 'X-CSRFToken': '{{ csrf_token }}' },
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                updateSummary(data);
+                if (callback) callback(data);
+            } else {
+                showToast('Error: ' + (data.error || 'Unknown'), 'error');
+            }
+        })
+        .catch(() => showToast('Network error', 'error'));
+    }
+
+    // --- Event listeners ---
+    document.addEventListener('DOMContentLoaded', function() {
+        const tbody = document.getElementById('cartBody');
+        if (!tbody) return;
+
+        // Toggle selection
+        tbody.addEventListener('change', function(e) {
+            if (e.target.classList.contains('select-check')) {
+                const cb = e.target;
+                const itemId = cb.dataset.itemId;
+                updateCart('toggle_selected', itemId, { checked: cb.checked });
+            }
+        });
+
+        // Update quantity
+        tbody.addEventListener('click', function(e) {
+            const btn = e.target.closest('.update-btn');
+            if (btn) {
+                e.preventDefault();
+                const tr = btn.closest('tr');
+                const itemId = btn.dataset.itemId;
+                const qtyInput = tr.querySelector('.qty-input');
+                let qty = parseInt(qtyInput.value, 10);
+                if (isNaN(qty) || qty < 1) qty = 1;
+                qtyInput.value = qty;
+                updateCart('update_qty', itemId, { qty: qty }, function(data) {
+                    if (data.item_total !== undefined) {
+                        tr.querySelector('.line-total').textContent = `₹ ${data.item_total.toFixed(1)}`;
+                    }
+                    showToast(`Quantity updated to ${qty}`);
+                });
+            }
+        });
+
+        // Delete item
+        tbody.addEventListener('click', function(e) {
+            const btn = e.target.closest('.delete-btn');
+            if (btn) {
+                e.preventDefault();
+                const itemId = btn.dataset.itemId;
+                if (confirm('Remove this item from cart?')) {
+                    updateCart('delete', itemId, null, function(data) {
+                        const tr = btn.closest('tr');
+                        tr.remove();
+                        showToast('Item removed');
+                        updateSummary(data);
+                        if (document.querySelectorAll('#cartBody tr').length === 0) {
+                            location.reload(); // or dynamically insert empty row
+                        }
+                    });
+                }
+            }
+        });
+
+        // Proceed to Checkout
+        document.getElementById('proceedBtn').addEventListener('click', function(e) {
+            const checked = document.querySelectorAll('.select-check:checked').length;
+            if (checked === 0) {
+                showToast('Please select at least one item.', 'error');
+                return;
+            }
+            window.location.href = "{% url 'checkout' %}";
+        });
+    });
+</script>
+
+{% endblock %}

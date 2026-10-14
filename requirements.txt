@@ -1,0 +1,15 @@
+django
+stripe
+python-dotenv
+pillow
+twilio
+phonenumbers
+django-phonenumber-field
+sib-api-v3-sdk
+sendgrid
+dj-brevo
+django-anymail[brevo]
+django-two-factor-auth
+qrcode
+django-otp
+requests

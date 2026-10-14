@@ -1,0 +1,209 @@
+{% load static %}
+<html>
+<head>
+    <title>Ecom</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <script src="https://js.stripe.com/v3/"></script>
+
+    <style>
+        /* Gradient Navbar Style */
+        .navbar {
+            background: linear-gradient(90deg, #4facfe 0%, #6a82fb 100%);
+        }
+        .navbar-brand {
+            font-weight: 600;
+            font-size: 1.8rem;
+            color: #ffffff !important;
+        }
+
+        .navbar-nav .nav-link {
+            color: #ffffff !important;
+            font-weight: 500;
+            margin-right: 20px;
+            transition: color 0.3s;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #ffc107 !important;
+        }
+
+        .navbar-toggler-icon {
+            background-color: #fff;
+        }
+
+        .navbar-collapse {
+            justify-content: flex-end;
+        }
+
+        .cart-count {
+            background-color: #dc3545;
+            color: white;
+            font-size: 0.75rem;
+            padding: 2px 7px;
+            border-radius: 10px;
+            margin-left: 4px;
+        }
+
+        .navbar-text {
+            color: #fff;
+        }
+
+        .btn-outline-primary,
+        .btn-outline-danger {
+            color: #fff;
+            border-color: #fff;
+        }
+
+        .btn-outline-primary:hover,
+        .btn-outline-danger:hover {
+            background-color: #ffc107;
+            border-color: #ffc107;
+            color: #000;
+        }
+    </style>
+
+</head>
+<body>
+
+    <!-- Gradient Navbar with Search -->
+<!-- Gradient Navbar with Search -->
+<nav class="navbar navbar-expand-lg navbar-light shadow-sm">
+    <div class="container">
+        <a class="navbar-brand font-weight-bold" href="{% url 'home' %}">🛒 EcomStore</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav mr-auto">
+                {% if user.is_authenticated %}
+                <li class="nav-item m-1 p-1">
+                    <a class="nav-link" href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'cart' %}">Cart 🛍️
+                        <span class="badge badge-pill badge-light">{{ order.gettotalqty }}</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'details' %}" class="btn-vibrant btn btn-primary m-2 p-2 text-white">
+        <i class="fas fa-box-open"></i> Products Management</a>
+                </li>
+                   <li class="nav-item m-1 p-1">
+                    <a href="{% url 'myorders' %}" class="btn-vibrant btn btn-primary text-white">
+        <i class="fas fa-box-open"></i> Orders Management</a>
+                </li>
+
+                {% endif %}
+            </ul>
+
+            <!-- Search Form -->
+            <form class="form-inline  m-lg-1 mr-3" method="GET" action="{% url 'home' %}" id="searchForm">
+                <div class="input-group">
+                    <input class="form-control" type="search"
+                           name="search"
+                           placeholder="Search by title, author, or price"
+                           aria-label="Search"
+                           value="{{ search_string|default:'' }}"
+                           id="searchInput">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+                {% if current_sort %}
+                <input type="hidden" name="sort" value="{{ current_sort }}">
+                {% endif %}
+            </form>
+
+            {% if user.is_authenticated %}
+            <span class="navbar-text mr-3">
+                👋 Hello, {{ user.username }}
+            </span>
+            <a href="{% url 'logout' %}" class="btn btn-outline-danger btn-sm">Logout</a>
+            {% else %}
+<!--            <a href="{% url 'login' %}" class="btn btn-outline-primary btn-sm ml-auto">Login</a>-->
+            <a href="{% url 'two_factor:login' %}" class="btn btn-outline-primary btn-sm ml-auto">Login</a>
+
+            {% endif %}
+        </div>
+    </div>
+</nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <br>
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+<ul class="navbar-nav ml-auto">
+<!--    {% if user.is_authenticated %}-->
+<!--    <li class="nav-item">-->
+<!--        <a class="nav-link" href="{% url 'logout' %}">Logout</a>-->
+<!--    </li>-->
+<!--    {% else %}-->
+<!--    <li class="nav-item">-->
+<!--        <a class="nav-link" href="{% url 'login' %}">Login</a>-->
+<!--    </li>-->
+<!--    {% endif %}-->
+</ul>
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded – sorting script running');
+    // Handle all sort dropdowns
+    const sortDropdowns = document.querySelectorAll('.sort-dropdown');
+    console.log('Found ' + sortDropdowns.length + ' sort dropdowns');
+
+    sortDropdowns.forEach(dropdown => {
+        dropdown.addEventListener('change', function(e) {
+             e.preventDefault();
+            // Get current URL parameters
+            const currentUrl = new URL(window.location.href);
+            const selectedValue = this.value;
+
+            // Update sort parameter
+            currentUrl.searchParams.set('sort', selectedValue);
+            // Preserve search if exists
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput && searchInput.value) {
+                currentUrl.searchParams.set('search', searchInput.value);
+            }
+            else {
+                // If no search input, remove search param to avoid empty string
+                currentUrl.searchParams.delete('search');
+            }
+            // Reset to page 1 when sorting changes
+            currentUrl.searchParams.set('page', '1');
+
+            // Navigate to new URL
+            window.location.href = currentUrl.toString();
+        });
+    });
+
+    // Auto-submit search on Enter
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) {
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('searchForm').submit();
+            }
+        });
+    }
+});
+</script>
+{% endblock %}
+</body>
+</html>
+

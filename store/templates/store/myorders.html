@@ -1,0 +1,80 @@
+{% extends "store/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+{% for ord in orders %}
+    <div class="card shadow p-4 mb-4">
+        <h3 class="mb-3">Order Details</h3>
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <strong>Order ID:</strong> {{ ord.id }}
+            </div>
+            <div class="col-md-4">
+                <strong>Order Date:</strong> {{ ord.date_created }}
+            </div>
+            <div class="col-md-4">
+                <strong>Transaction ID:</strong> {{ ord.transaction_id }}
+            </div>
+        </div>
+
+        <table class="table table-bordered table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>Product Name</th>
+                    <th>Price (₹)</th>
+                    <th>Quantity</th>
+                    <th>Total (₹)</th>
+                </tr>
+            </thead>
+
+<tbody>
+<!-- FIXED: Changed 'orders.orderitems_set.all' to 'ord.orderitems_set.all' -->
+ {% for item in ord.orderitems_set.all %}
+  {% if item.checked %} <!-- ⭐ ADD THIS LINE -->
+            <tr>
+                <td>{{ item.product.title }}</td>
+                <td>{{ item.product.price }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.getitemtotal }}</td>
+            </tr>
+ {% endif %}
+ {% empty %}
+                <tr>
+                    <td colspan="4" class="text-center">No items found for this order.</td>
+                </tr>
+ {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3" class="text-end"><strong>Order Total</strong></td>
+                    <td><strong>₹ {{ ord.getordertotal }}</strong></td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <!-- FIXED: Changed 'order.id' to 'ord.id' -->
+                        <form method="POST" action="{% url 'cancel_order' ord.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-vibrant btn btn-danger" onclick="return confirm('Are you sure you want to cancel this order and request a refund?');">
+                                Cancel Order & Refund
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    {% endfor %}
+    <!-- Place this AFTER your loop finishes -->
+<!-- Grand Total Card -->
+    <div class="card mt-4 mb-5 shadow-sm" style="border: 1px solid #e3e3e3; border-radius: 6px;">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center">
+                <h4 class="mb-0 text-dark"><strong>Overall Grand Total</strong></h4>
+                <h4 class="mb-0 text-dark"><strong>₹ {{ grand_total|floatformat:1 }}</strong></h4>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,281 @@
+
+{% extends 'Store/base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+  /* ---------- Page background ---------- */
+  .success-wrap {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1rem;
+    background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 50%, #ffd6e8 100%);
+    background-size: 200% 200%;
+    animation: gradientShift 12s ease infinite;
+    position: relative;
+    overflow: hidden;
+  }
+  @keyframes gradientShift {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* Floating hearts in the background */
+  .heart {
+    position: absolute;
+    font-size: 1.6rem;
+    opacity: 0.55;
+    animation: floatUp linear infinite;
+    pointer-events: none;
+    user-select: none;
+  }
+  @keyframes floatUp {
+    0%   { transform: translateY(100vh) scale(0.6); opacity: 0; }
+    10%  { opacity: 0.6; }
+    100% { transform: translateY(-10vh) scale(1.1); opacity: 0; }
+  }
+
+  /* ---------- Main card ---------- */
+  .success-card {
+    position: relative;
+    z-index: 2;
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 3rem 2.5rem;
+    max-width: 620px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(108, 99, 255, 0.18),
+                0 8px 24px rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+    animation: cardPop 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .success-card:hover {
+    transform: translateY(-8px) scale(1.01);
+    box-shadow: 0 30px 80px rgba(108, 99, 255, 0.28),
+                0 12px 32px rgba(0, 0, 0, 0.1);
+  }
+  @keyframes cardPop {
+    0%   { transform: scale(0.85); opacity: 0; }
+    100% { transform: scale(1);    opacity: 1; }
+  }
+
+  /* ---------- Animated checkmark ---------- */
+  .check-circle {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6c63ff, #a084ff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    box-shadow: 0 10px 30px rgba(108, 99, 255, 0.45);
+    animation: pulseRing 2s ease infinite;
+  }
+  @keyframes pulseRing {
+    0%   { box-shadow: 0 0 0 0   rgba(108, 99, 255, 0.5); }
+    70%  { box-shadow: 0 0 0 22px rgba(108, 99, 255, 0); }
+    100% { box-shadow: 0 0 0 0   rgba(108, 99, 255, 0); }
+  }
+  .check-circle svg {
+    width: 52px;
+    height: 52px;
+    stroke: #fff;
+    stroke-width: 4;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 60;
+    stroke-dashoffset: 60;
+    animation: drawCheck 0.9s 0.4s ease forwards;
+  }
+  @keyframes drawCheck {
+    to { stroke-dashoffset: 0; }
+  }
+
+  /* ---------- Heading & text ---------- */
+  .success-title {
+    font-weight: 800;
+    font-size: 2rem;
+    background: linear-gradient(90deg, #6c63ff, #ff5fa2, #ffb347);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.75rem;
+    animation: shine 4s linear infinite;
+  }
+  @keyframes shine {
+    to { background-position: 200% center; }
+  }
+
+  .success-sub {
+    color: #555;
+    font-size: 1.05rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .success-sub strong {
+    color: #6c63ff;
+  }
+
+  /* ---------- Thumbs-up GIF ---------- */
+  .thumb-gif {
+    width: 140px;
+    height: 140px;
+    object-fit: contain;
+    display: block;
+    margin: 0.5rem auto 1.75rem;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #fff3f8, #e7e4ff);
+    padding: 12px;
+    box-shadow: 0 12px 36px rgba(255, 95, 162, 0.25);
+    animation: thumbBounce 1.6s ease-in-out infinite;
+  }
+  @keyframes thumbBounce {
+    0%, 100% { transform: translateY(0)   rotate(-3deg); }
+    50%      { transform: translateY(-10px) rotate(3deg); }
+  }
+
+  /* ---------- Buttons ---------- */
+  .btn-row {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+  }
+  .btn-vibrant {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 2rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  }
+  .btn-primary-vibrant {
+    background: linear-gradient(135deg, #6c63ff, #a084ff);
+    color: #fff;
+    box-shadow: 0 10px 24px rgba(108, 99, 255, 0.4);
+  }
+  .btn-primary-vibrant:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 16px 32px rgba(108, 99, 255, 0.55);
+    color: #fff;
+  }
+  .btn-secondary-vibrant {
+    background: #fff;
+    color: #6c63ff;
+    border: 2px solid #6c63ff;
+  }
+  .btn-secondary-vibrant:hover {
+    background: #6c63ff;
+    color: #fff;
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 12px 28px rgba(108, 99, 255, 0.35);
+  }
+
+  /* Email chip */
+  .email-chip {
+    display: inline-block;
+    background: #f4f3ff;
+    color: #6c63ff;
+    border-radius: 50px;
+    padding: 0.45rem 1.1rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Responsive */
+  @media (max-width: 576px) {
+    .success-card { padding: 2rem 1.25rem; }
+    .success-title { font-size: 1.5rem; }
+    .thumb-gif { width: 110px; height: 110px; }
+    .check-circle { width: 76px; height: 76px; }
+    .check-circle svg { width: 40px; height: 40px; }
+  }
+</style>
+
+<div class="success-wrap">
+
+  <!-- Floating hearts (rendered by JS below) -->
+  <div id="hearts"></div>
+
+  <div class="success-card">
+
+    <!-- Animated checkmark -->
+    <div class="check-circle">
+      <svg viewBox="0 0 52 52">
+        <polyline points="14,27 23,36 38,18" />
+      </svg>
+    </div>
+
+    <!-- Heading -->
+    <h1 class="success-title">Yay! Order Confirmed Successfully!! 💖</h1>
+{% if order_id %}
+  <div class="email-chip" style="background:#fff3f8; color:#ff5fa2;">
+    <i class="fas fa-receipt me-1"></i>
+    Order ID: <strong>#{{ order_id }}</strong>
+  </div>
+{% endif %}
+    <p class="success-sub">
+      Thank you for shopping with us — your order#{{ order_id }} is now being processed
+      and will be shipped soon 🚚✨
+    </p>
+
+    {% if email %}
+      <div class="email-chip">
+        <i class="fas fa-envelope me-1"></i>
+        Confirmation sent to <strong>{{ email }}</strong>
+      </div>
+    {% endif %}
+
+    <!-- Thumbs-up GIF -->
+    <img
+      class="thumb-gif"
+      src="https://media.giphy.com/media/111ebonMs90YLu/giphy.gif"
+      alt="Thumbs up"
+    >
+
+    <!-- Buttons -->
+    <div class="btn-row">
+      <a href="{% url 'myorders' %}" class="btn-vibrant btn-primary-vibrant">
+        <i class="fas fa-box-open"></i> My Prev Orders
+      </a>
+      <a href="{% url 'home' %}" class="btn-vibrant btn-secondary-vibrant">
+        <i class="fas fa-store"></i> Continue Shopping
+      </a>
+    </div>
+
+  </div>
+</div>
+<script>
+  // Spawn floating hearts
+  (function () {
+    const container = document.getElementById('hearts');
+    const emojis = ['💖', '💕', '✨', '🎉', '💗', '⭐'];
+    for (let i = 0; i < 18; i++) {
+      const h = document.createElement('span');
+      h.className = 'heart';
+      h.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      h.style.left = Math.random() * 100 + '%';
+      h.style.animationDuration = (7 + Math.random() * 6) + 's';
+      h.style.animationDelay = (Math.random() * 5) + 's';
+      h.style.fontSize = (1 + Math.random() * 1.6) + 'rem';
+      container.appendChild(h);
+    }
+  })();
+</script>
+
+{% endblock %}

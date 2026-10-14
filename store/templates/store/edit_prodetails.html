@@ -1,0 +1,52 @@
+{% extends "store/base.html" %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+
+            <!-- Back Button -->
+            <div class="mb-3">
+                <a href="{% url 'details' %}" class="btn btn-outline-secondary btn-sm">
+                    <i class="fas fa-arrow-left"></i> Back to Products Management
+                </a>
+            </div>
+
+            <!-- Form Card -->
+            <div class="card shadow-sm" style="border: 1px solid #e3e3e3; border-radius: 6px;">
+                <div class="card-header bg-dark text-white">
+                    <h4 class="mb-0">Edit Product: <strong>{{ product.title }}</strong></h4>
+                </div>
+
+                <div class="card-body p-4">
+                    <!--
+                      IMPORTANT: enctype="multipart/form-data" is REQUIRED
+                      any time your form includes a file or image upload.
+                    -->
+                    <form method="POST" action="" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <!--
+                          This renders all the fields we defined in ProductForm.
+                          Because we added 'form-control' widget classes in forms.py,
+                          they will automatically look good with Bootstrap.
+                        -->
+                        {{ form.as_p }}
+
+                        <hr class="mt-4 mb-4">
+
+                        <!-- Form Actions -->
+                        <div class="d-flex justify-content-end">
+                            <a href="{% url 'details' %}" class="btn btn-secondary me-2 shadow-sm">Cancel</a>
+                            <button type="submit" class="btn btn-success px-4 shadow-sm">
+                                <i class="fas fa-save"></i> Save Changes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
