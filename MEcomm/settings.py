@@ -12,79 +12,65 @@ https://docs.djangoproject.com/en/6.1/ref/settings/
 
 from pathlib import Path
 import os
-from dotenv import load_dotenv   # pip install python-dotenv
+import dj_database_url
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-# settings.py
 
+# Load .env from project root
 load_dotenv(BASE_DIR / ".env")
 
-# 1. STATIC_URL - ALWAYS needed (both dev & prod)
-STATIC_URL = '/static/'  # URL to serve static files
+# ------------------------------------------------------------------
+# SECURITY
+# ------------------------------------------------------------------
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
-# 2. STATICFILES_DIRS - Development only
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),  # Your custom static files
+DEBUG = os.getenv("DJANGO_DEBUG", "False") == "True"
+
+ALLOWED_HOSTS = [
+    "bookmyebooks.vercel.app",
+    "bookmyebooks-git-main-ishaan1935-1581.vercel.app",
+    "bookmyebooks-a9u8mp8zu-ishaan1935-1581.vercel.app",
+    "localhost",
+    "127.0.0.1",
 ]
 
-# 3. STATIC_ROOT - Production ONLY
-# STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")  # Where collectstatic puts files
+# Trust Vercel's proxy for HTTPS
+CSRF_TRUSTED_ORIGINS = [
+    "https://bookmyebooks.vercel.app",
+    "https://bookmyebooks-git-main-ishaan1935-1581.vercel.app",
+    "https://bookmyebooks-a9u8mp8zu-ishaan1935-1581.vercel.app",
+]
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/6.1/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-
-ALLOWED_HOSTS = ['*']
-# 1. Add Textbee Credentials
-TEXTBEE_DEVICE_ID = os.getenv("TEXTBEE_DEVICE_ID")
-TEXTBEE_API_KEY = os.getenv("TEXTBEE_API_KEY")
-
-TWILIO_ACCOUNT_SID=os.getenv("TWILIO_ACCOUNT_SID")
-TWILIO_AUTH_TOKEN=os.getenv("TWILIO_AUTH_TOKEN")
-TWILIO_PHONE_NUMBER = os.getenv("TWILIO_PHONE_NUMBER")
-#
-load_dotenv()                    # reads .env at project root
-# ---- Email provider switch ----
-EMAIL_PROVIDER = os.getenv("EMAIL_PROVIDER", "sendgrid").strip().lower()
-
-# ---- Brevo (map your .env keys -> settings names used in code) ----
-BREVO_API_KEY       = os.getenv("Brevo_APIKey")
-BREVO_SENDER_EMAIL  = os.getenv("Brevo_FromEmail")
-BREVO_SENDER_NAME   = os.getenv("Brevo_SenderName", "Your Store")
-SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
-# Application definition
+# ------------------------------------------------------------------
+# APPLICATIONS
+# ------------------------------------------------------------------
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    "django.contrib.sites",
-    'store',
-    "allauth",
-    "allauth.account",
-    "allauth.socialaccount",
-    "allauth.socialaccount.providers.google",
-    "allauth.socialaccount.providers.facebook",
+    'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Third-party
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.facebook',
     'django_otp',
     'django_otp.plugins.otp_totp',
-    'django_otp.plugins.otp_static', # ⭐ ADD THIS LINE (It's missing!)
+    'django_otp.plugins.otp_static',
     'two_factor',
-    'two_factor.plugins.phonenumber',# Uncomment if you want SMS 2FA as well
-]
-ACCOUNT_LOGIN_METHODS = {'email', 'username'}
-# The asterisk (*) means required.
-# Email has no asterisk, meaning it is asked for, but optional.
-ACCOUNT_SIGNUP_FIELDS = ['email', 'username', 'password1*', 'password2*']              # Stops forcing the email requirement
-# 3. Define the custom SMS Gateway
+    'two_factor.plugins.phonenumber',
 
-TWO_FACTOR_SMS_GATEWAY = 'store.utils.auth_sms_gateway.TextbeeGateway'
+    # Local
+    'store',
+]
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -92,13 +78,13 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'allauth.account.middleware.AccountMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django_otp.middleware.OTPMiddleware',  # ⭐ Add this
+    'django_otp.middleware.OTPMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'django.contrib.auth.middleware.AuthenticationMiddleware',
 ]
 
 ROOT_URLCONF = 'MEcomm.urls'
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -114,99 +100,122 @@ TEMPLATES = [
         },
     },
 ]
-WSGI_APPLICATION = 'MEcomm.wsgi.application'
 
-SOCIALACCOUNT_LOGIN_ON_GET = True   # skip "confirm" page (optional)
+WSGI_APPLICATION = 'MEcomm.wsgi.app'
+
+# ------------------------------------------------------------------
+# AUTH
+# ------------------------------------------------------------------
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+ACCOUNT_LOGIN_METHODS = {'email', 'username'}
+ACCOUNT_SIGNUP_FIELDS = ['email', 'username', 'password1*', 'password2*']
+SOCIALACCOUNT_LOGIN_ON_GET = True
 
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
         "APP": {
-            "client_id": os.environ["GOOGLE_CLIENT_ID"],
-            "secret": os.environ["GOOGLE_CLIENT_SECRET"],
+            "client_id": os.environ.get("GOOGLE_CLIENT_ID", ""),
+            "secret": os.environ.get("GOOGLE_CLIENT_SECRET", ""),
         },
         "SCOPE": ["profile", "email"],
         "AUTH_PARAMS": {"access_type": "online"},
     },
     "facebook": {
         "APP": {
-            "client_id": os.environ["FACEBOOK_APP_ID"],
-            "secret": os.environ["FACEBOOK_APP_SECRET"],
+            "client_id": os.environ.get("FACEBOOK_APP_ID", ""),
+            "secret": os.environ.get("FACEBOOK_APP_SECRET", ""),
         },
         "METHOD": "oauth2",
         "SCOPE": ["email", "public_profile"],
         "FIELDS": ["id", "email", "name", "first_name", "last_name"],
     },
 }
-AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
-]
 
-# Database
-# https://docs.djangoproject.com/en/6.1/ref/settings/#databases
+# Two-factor SMS gateway
+TWO_FACTOR_SMS_GATEWAY = 'store.utils.auth_sms_gateway.TextbeeGateway'
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db_backup.sqlite3',
-    }
-}
 SITE_ID = 1
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
-# Password validation
-# https://docs.djangoproject.com/en/6.1/ref/settings/#auth-password-validators
 
+# ------------------------------------------------------------------
+# DATABASE
+# ------------------------------------------------------------------
+DATABASES = {
+    "default": dj_database_url.parse(
+        os.environ.get("DATABASE_URL", ""),
+        conn_max_age=600,
+        conn_health_checks=True,
+    )
+}
+
+# ------------------------------------------------------------------
+# PASSWORD VALIDATION
+# ------------------------------------------------------------------
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-
-# Internationalization
-# https://docs.djangoproject.com/en/6.1/topics/i18n/
-
+# ------------------------------------------------------------------
+# INTERNATIONALIZATION
+# ------------------------------------------------------------------
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/6.1/howto/static-files/
+# ------------------------------------------------------------------
+# STATIC & MEDIA
+# ------------------------------------------------------------------
+STATIC_URL = '/static/'
 
-# STATIC_URL = 'static/'
-# Optional: For media files (user uploads)
-MEDIA_ROOT = os.path.join(BASE_DIR, "static/images")
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
 MEDIA_URL = "/images/"
-# settings.py# name from urls.py
+MEDIA_ROOT = os.path.join(BASE_DIR, "static/images")
+
+# ------------------------------------------------------------------
+# THIRD-PARTY API KEYS
+# ------------------------------------------------------------------
+TEXTBEE_DEVICE_ID = os.getenv("TEXTBEE_DEVICE_ID")
+TEXTBEE_API_KEY = os.getenv("TEXTBEE_API_KEY")
+
+TWILIO_ACCOUNT_SID = os.getenv("TWILIO_ACCOUNT_SID")
+TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN")
+TWILIO_PHONE_NUMBER = os.getenv("TWILIO_PHONE_NUMBER")
+
+EMAIL_PROVIDER = os.getenv("EMAIL_PROVIDER", "sendgrid").strip().lower()
+
+BREVO_API_KEY = os.getenv("Brevo_APIKey")
+BREVO_SENDER_EMAIL = os.getenv("Brevo_FromEmail")
+BREVO_SENDER_NAME = os.getenv("Brevo_SenderName", "Your Store")
 
 STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")
 STRIPE_PUBLISHABLE_KEY = os.getenv("STRIPE_PUBLISHABLE_KEY")
-# Email
-# https://docs.djangoproject.com/en/6.1/topics/email/#topic-email-configuration
-MAILERS = {
-    'default': {
-        "BACKEND": "django.core.mail.backends.smtp.EmailBackend",
-        "OPTIONS": {
-            "host": "smtp.gmail.com",
-            "port": 587,
-            "username": os.getenv("EMAIL_HOST_USER"),
-            "password": os.getenv("EMAIL_HOST_PASSWORD"),
-            "use_tls": True,
-        },
-    },
-}
+
+# ------------------------------------------------------------------
+# EMAIL
+# ------------------------------------------------------------------
+# EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+# EMAIL_HOST = "smtp.gmail.com"
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+# EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+# DEFAULT_FROM_EMAIL = os.getenv("EMAIL_HOST_USER")
+
+# ------------------------------------------------------------------
+# MISC
+# ------------------------------------------------------------------
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
