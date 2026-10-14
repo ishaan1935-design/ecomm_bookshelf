@@ -37,7 +37,7 @@ STATICFILES_DIRS = [
 # SECURITY WARNING: keep the secret key used in production secret!
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 # 1. Add Textbee Credentials
@@ -56,7 +56,7 @@ EMAIL_PROVIDER = os.getenv("EMAIL_PROVIDER", "sendgrid").strip().lower()
 BREVO_API_KEY       = os.getenv("Brevo_APIKey")
 BREVO_SENDER_EMAIL  = os.getenv("Brevo_FromEmail")
 BREVO_SENDER_NAME   = os.getenv("Brevo_SenderName", "Your Store")
-
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
