@@ -143,16 +143,34 @@ LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 
 # ------------------------------------------------------------------
-# DATABASE
-# ------------------------------------------------------------------
-DATABASES = {
-    "default": dj_database_url.parse(
-        os.environ.get("DATABASE_URL", ""),
-        conn_max_age=600,
-        conn_health_checks=True,
-    )
-}
+# DATABASES = {
+#     "default": {
+#         "ENGINE" : "django.db.backends.sqlite3",
+#         "NAME" : BASE_DIR/'db.dbsqlite3'
+#     }
+# }
 
+# ------------------------------------------------------------------
+# DATABASES = {
+#     "default": dj_database_url.parse(
+#         os.environ.get("DATABASE_URL", ""),
+#         conn_max_age=600,
+#         conn_health_checks=True,
+#     )
+# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('PGDATABASE', 'neondb'),
+        'USER': os.environ.get('PGUSER', 'neondb_owner'),
+        'PASSWORD': os.environ.get('PGPASSWORD', 'npg_mP6oNaCjF4Wb'),
+        'HOST': os.environ.get('PGHOST', 'ep-billowing-river-b8f960hz-pooler.c-14.us-east-1.aws.neon.tech'),
+        'PORT': '5432',
+        'OPTIONS': {
+            'sslmode': 'require',
+        },
+    }
+}
 # ------------------------------------------------------------------
 # PASSWORD VALIDATION
 # ------------------------------------------------------------------
