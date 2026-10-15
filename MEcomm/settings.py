@@ -28,12 +28,23 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
 DEBUG = os.getenv("DJANGO_DEBUG", "False") == "True"
 
+# ALLOWED_HOSTS = [
+#     "bookmyebooks.vercel.app",
+#     "bookmyebooks-git-main-ishaan1935-1581.vercel.app",
+#     "bookmyebooks-a9u8mp8zu-ishaan1935-1581.vercel.app",
+#     "localhost",
+#     "127.0.0.1",
+# ]
 ALLOWED_HOSTS = [
     "bookmyebooks.vercel.app",
-    "bookmyebooks-git-main-ishaan1935-1581.vercel.app",
-    "bookmyebooks-a9u8mp8zu-ishaan1935-1581.vercel.app",
+    ".vercel.app",              # allows all *.vercel.app preview URLs
     "localhost",
     "127.0.0.1",
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://bookmyebooks.vercel.app",
+    "https://*.vercel.app",     # allows all *.vercel.app for CSRF
 ]
 
 # Trust Vercel's proxy for HTTPS
@@ -146,7 +157,7 @@ LOGOUT_REDIRECT_URL = "/"
 # DATABASES = {
 #     "default": {
 #         "ENGINE" : "django.db.backends.sqlite3",
-#         "NAME" : BASE_DIR/'db.dbsqlite3'
+#         "NAME" : BASE_DIR/'db.sqlite3'
 #     }
 # }
 
