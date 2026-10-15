@@ -28,13 +28,6 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
 DEBUG = os.getenv("DJANGO_DEBUG", "False") == "True"
 
-# ALLOWED_HOSTS = [
-#     "bookmyebooks.vercel.app",
-#     "bookmyebooks-git-main-ishaan1935-1581.vercel.app",
-#     "bookmyebooks-a9u8mp8zu-ishaan1935-1581.vercel.app",
-#     "localhost",
-#     "127.0.0.1",
-# ]
 ALLOWED_HOSTS = [
     "bookmyebooks.vercel.app",
     ".vercel.app",              # allows all *.vercel.app preview URLs
@@ -45,13 +38,6 @@ ALLOWED_HOSTS = [
 CSRF_TRUSTED_ORIGINS = [
     "https://bookmyebooks.vercel.app",
     "https://*.vercel.app",     # allows all *.vercel.app for CSRF
-]
-
-# Trust Vercel's proxy for HTTPS
-CSRF_TRUSTED_ORIGINS = [
-    "https://bookmyebooks.vercel.app",
-    "https://bookmyebooks-git-main-ishaan1935-1581.vercel.app",
-    "https://bookmyebooks-a9u8mp8zu-ishaan1935-1581.vercel.app",
 ]
 
 # ------------------------------------------------------------------
@@ -154,34 +140,16 @@ LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 
 # ------------------------------------------------------------------
-# DATABASES = {
-#     "default": {
-#         "ENGINE" : "django.db.backends.sqlite3",
-#         "NAME" : BASE_DIR/'db.sqlite3'
-#     }
-# }
-
+# DATABASE
 # ------------------------------------------------------------------
-# DATABASES = {
-#     "default": dj_database_url.parse(
-#         os.environ.get("DATABASE_URL", ""),
-#         conn_max_age=600,
-#         conn_health_checks=True,
-#     )
-# }
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('PGDATABASE', 'neondb'),
-        'USER': os.environ.get('PGUSER', 'neondb_owner'),
-        'PASSWORD': os.environ.get('PGPASSWORD', 'npg_mP6oNaCjF4Wb'),
-        'HOST': os.environ.get('PGHOST', 'ep-billowing-river-b8f960hz-pooler.c-14.us-east-1.aws.neon.tech'),
-        'PORT': '5432',
-        'OPTIONS': {
-            'sslmode': 'require',
-        },
-    }
+    "default": dj_database_url.config(
+        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
+        conn_max_age=600,
+        conn_health_checks=True,
+    )
 }
+
 # ------------------------------------------------------------------
 # PASSWORD VALIDATION
 # ------------------------------------------------------------------
@@ -236,13 +204,13 @@ STRIPE_PUBLISHABLE_KEY = os.getenv("STRIPE_PUBLISHABLE_KEY")
 # ------------------------------------------------------------------
 # EMAIL
 # ------------------------------------------------------------------
-# EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-# EMAIL_HOST = "smtp.gmail.com"
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
-# EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
-# EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
-# DEFAULT_FROM_EMAIL = os.getenv("EMAIL_HOST_USER")
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+DEFAULT_FROM_EMAIL = os.getenv("EMAIL_HOST_USER")
 
 # ------------------------------------------------------------------
 # MISC
