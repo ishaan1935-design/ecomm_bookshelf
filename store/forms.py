@@ -15,7 +15,6 @@ class UserRegisterForm(UserCreationForm):
         model = User
         fields = ["username", "email", "password1", "password2"]
 
-
 # Customer Form (already exists)
 class CustomerForm(forms.ModelForm):
     class Meta:

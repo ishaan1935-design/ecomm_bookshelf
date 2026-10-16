@@ -51,7 +51,6 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     # Third-party
     'allauth',
     'allauth.account',
@@ -63,7 +62,6 @@ INSTALLED_APPS = [
     'django_otp.plugins.otp_static',
     'two_factor',
     'two_factor.plugins.phonenumber',
-
     # Local
     'store',
 ]
@@ -85,7 +83,7 @@ ROOT_URLCONF = 'MEcomm.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],  # <-- add this
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -141,6 +139,12 @@ LOGOUT_REDIRECT_URL = "/"
 
 # ------------------------------------------------------------------
 # DATABASE
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db_backup.sqlite3",
+#     }
+# }
 # ------------------------------------------------------------------
 DATABASES = {
     "default": dj_database_url.config(
@@ -204,13 +208,13 @@ STRIPE_PUBLISHABLE_KEY = os.getenv("STRIPE_PUBLISHABLE_KEY")
 # ------------------------------------------------------------------
 # EMAIL
 # ------------------------------------------------------------------
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
-DEFAULT_FROM_EMAIL = os.getenv("EMAIL_HOST_USER")
+# EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+# EMAIL_HOST = "smtp.gmail.com"
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+# EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+# DEFAULT_FROM_EMAIL = os.getenv("EMAIL_HOST_USER")
 
 # ------------------------------------------------------------------
 # MISC
