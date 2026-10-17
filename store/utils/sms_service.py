@@ -47,7 +47,7 @@ def send_sms(order_obj):
 
     customer = order_obj.customer
     customer_name = customer.name or "Customer"
-    to_phone = customer.phone  # must be E.164, e.g. +9198xxxxxxxx
+    to_phone = customer.phonenumber  # must be E.164, e.g. +9198xxxxxxxx
 
     if not to_phone:
         print("Customer has no phone number — skipping SMS")
@@ -96,7 +96,7 @@ def make_phonecall(order_obj):
 
     customer = order_obj.customer
     customer_name = customer.name or "Customer"
-    to_phone = customer.phone
+    to_phone = customer.phonenumber
 
     if not to_phone:
         print("Customer has no phone number — skipping call")
@@ -117,14 +117,14 @@ def make_phonecall(order_obj):
     for it in items:
         response.say(
             f"{it['name']}, quantity {it['qty']}, subtotal {it['subtotal']} rupees.",
-            voice="Polly.Aditi",
+            voice="Polly.Man",
             language="en-IN",
         )
 
     response.say(
         f"Your total amount is {total} rupees. "
         f"Thank you and have a great day!",
-        voice="Polly.Aditi",
+        voice="Polly.Man",
         language="en-IN",
     )
 
