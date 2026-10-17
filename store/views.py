@@ -547,8 +547,8 @@ def successview(request):
         order_obj.orderitems_set.filter(checked=False).delete()
     # ✅ email FIRST (items still exist with checked=True)
     send_order_email(order_obj)
-    # send_sms(order_obj)
-    # make_phonecall(order_obj)
+    send_sms(order_obj)
+    make_phonecall(order_obj)
     # ✅ then reset the cart (this is the correct place)
     # try:
     #     reset_cart_count(order_obj.customer_id, order_obj.transaction_id)
