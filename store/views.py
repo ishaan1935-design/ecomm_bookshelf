@@ -211,7 +211,6 @@ def update_product(request, pk):
     else:
         # Pre-fills the form with current database values
         form = ProductForm(instance=product)
-
     context = {
         'form': form,
         'product': product,
@@ -519,6 +518,7 @@ def logout_view(request):
     return redirect('/myauth/login')
 
 def successview(request):
+    logger = logging.getLogger(__name__)
     session_id = request.GET.get('session_id')
     if not session_id:
         return render(request, 'store/cancelled.html', {
@@ -546,9 +546,26 @@ def successview(request):
         # ⭐ ADD THIS: Delete items that were left unchecked in the cart
         order_obj.orderitems_set.filter(checked=False).delete()
     # ✅ email FIRST (items still exist with checked=True)
-    send_order_email(order_obj)
-    send_sms(order_obj)
-    make_phonecall(order_obj)
+    try:
+        logger.info("Attempting to send email...")
+        send_order_email(order_obj)
+        logger.info("Email sent successfully.")
+    except Exception as e:
+        logger.error(f"Email failed: {e}")
+
+    try:
+        logger.info("Attempting to send SMS...")
+        send_sms(order_obj)
+        logger.info("SMS sent successfully.")
+    except Exception as e:
+        logger.error(f"SMS failed: {e}")
+
+    try:
+        logger.info("Attempting to make phone call...")
+        make_phonecall(order_obj)
+        logger.info("Phone call triggered.")
+    except Exception as e:
+        logger.error(f"Phone call failed: {e}")
     # ✅ then reset the cart (this is the correct place)
     # try:
     #     reset_cart_count(order_obj.customer_id, order_obj.transaction_id)
