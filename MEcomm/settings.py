@@ -144,20 +144,23 @@ LOGOUT_REDIRECT_URL = "/"
 #     }
 # }
 # ------------------------------------------------------------------
+# ------------------------------------------------------------------
+# DATABASE
+# ------------------------------------------------------------------
 DATABASES = {
-    "default": dj_database_url.config(
-        default=f"sqlite:///{BASE_DIR / 'db_backup.sqlite3'}",
+    'default': dj_database_url.config(
+        default=os.environ.get('DATABASE_URL', f"sqlite:///{BASE_DIR / 'db_backup.sqlite3'}"),
         conn_max_age=600,
         conn_health_checks=True,
     )
 }
-# 2. Configure Database for Render
-DATABASES = {
-    'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL'),
-        conn_max_age=600
-    )
-}
+# # 2. Configure Database for Render
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default=os.environ.get('DATABASE_URL'),
+#         conn_max_age=600
+#     )
+# }
 # 3. Configure Celery & Redis for Textbee/Brevo tasks
 CELERY_TASK_ALWAYS_EAGER = True
 # ------------------------------------------------------------------
