@@ -28,12 +28,8 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
 DEBUG = os.getenv("DJANGO_DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = [
-    "bookmyebooks.vercel.app",
-    ".vercel.app",              # allows all *.vercel.app preview URLs
-    "localhost",
-    "127.0.0.1",
-]
+default_hosts = "bookmyebooks.vercel.app,.vercel.app,localhost,127.0.0.1"
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', default_hosts).split(',')
 
 CSRF_TRUSTED_ORIGINS = [
     "https://bookmyebooks.vercel.app",
@@ -68,6 +64,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -77,7 +74,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 ROOT_URLCONF = 'MEcomm.urls'
 
 TEMPLATES = [
@@ -148,12 +145,22 @@ LOGOUT_REDIRECT_URL = "/"
 # ------------------------------------------------------------------
 DATABASES = {
     "default": dj_database_url.config(
-        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
+        default=f"sqlite:///{BASE_DIR / 'db_backup.sqlite3'}",
         conn_max_age=600,
         conn_health_checks=True,
     )
 }
-
+# 2. Configure Database for Render
+DATABASES = {
+    'default': dj_database_url.config(
+        default=os.environ.get('DATABASE_URL'),
+        conn_max_age=600
+    )
+}
+# 3. Configure Celery & Redis for Textbee/Brevo tasks
+CELERY_BROKER_URL = os.environ.get('REDIS_URL', 'redis://localhost:6379/0')
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
 # ------------------------------------------------------------------
 # PASSWORD VALIDATION
 # ------------------------------------------------------------------

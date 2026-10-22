@@ -1,0 +1,1260 @@
+[
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1500000$Ze3wVqZ6InswkqQ9hsifak$MyYJSEs6+XquG18H2rtEzJ+Mf/r2fLashpURcyv4gAA=",
+    "last_login": "2026-10-10T05:30:52Z",
+    "is_superuser": true,
+    "username": "aadmin",
+    "first_name": "Ishan",
+    "last_name": "Adm",
+    "email": "ishaan1935@gmail.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-09-01T05:30:51Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1500000$w5r3ryt1LikXqQUwJLoXs4$wPXfjz3CuAUdYpYePxYWaM/rhBUF8Scw6JWbN2H162I=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "IshaanS",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-09-01T05:40:35.423Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1500000$JtfoOofv5kxX3tfq5Yyakt$p3XKaFd1KxnULocClNHKPOdnBE6otM0hgRjbKAL40rM=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "Rvanshika",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-09-01T05:46:51.040Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "!mW52r0QJAUCqsSGZyhYDxkJWVpD45nSXCam9qsEf",
+    "last_login": "2026-09-24T05:25:21.964Z",
+    "is_superuser": false,
+    "username": "ishaan",
+    "first_name": "Ishaan",
+    "last_name": "Sharma",
+    "email": "mickey1935mmj@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-09-22T10:33:41.054Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "!ymW0pkp1ssliKTM6yvwtmK1alRh5zOPakqPktb45",
+    "last_login": "2026-10-09T11:11:14.828Z",
+    "is_superuser": false,
+    "username": "ishan",
+    "first_name": "ishan",
+    "last_name": "sharma",
+    "email": "ishaan1935@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-09-23T05:03:10.162Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "sites.site",
+  "fields": {
+    "domain": "example.com",
+    "name": "example.com"
+  }
+},
+{
+  "model": "account.emailaddress",
+  "pk": 3,
+  "fields": {
+    "user": [
+      "ishaan"
+    ],
+    "email": "mickey1935mmj@gmail.com",
+    "verified": false,
+    "primary": true
+  }
+},
+{
+  "model": "account.emailaddress",
+  "pk": 4,
+  "fields": {
+    "user": [
+      "ishan"
+    ],
+    "email": "ishaan1935@gmail.com",
+    "verified": true,
+    "primary": true
+  }
+},
+{
+  "model": "socialaccount.socialaccount",
+  "pk": 3,
+  "fields": {
+    "user": [
+      "ishaan"
+    ],
+    "provider": "facebook",
+    "uid": "2923717587987577",
+    "last_login": "2026-09-24T05:25:21.923Z",
+    "date_joined": "2026-09-22T10:33:41.072Z",
+    "extra_data": {
+      "id": "2923717587987577",
+      "email": "mickey1935mmj@gmail.com",
+      "name": "Ishaan Sharma",
+      "first_name": "Ishaan",
+      "last_name": "Sharma"
+    }
+  }
+},
+{
+  "model": "socialaccount.socialaccount",
+  "pk": 4,
+  "fields": {
+    "user": [
+      "ishan"
+    ],
+    "provider": "google",
+    "uid": "117677598124126689786",
+    "last_login": "2026-10-09T11:11:14.798Z",
+    "date_joined": "2026-09-23T05:03:10.189Z",
+    "extra_data": {
+      "iss": "https://accounts.google.com",
+      "azp": "303647010544-ancnjgjp65gjash9d10322q1cr3bcfiq.apps.googleusercontent.com",
+      "aud": "303647010544-ancnjgjp65gjash9d10322q1cr3bcfiq.apps.googleusercontent.com",
+      "sub": "117677598124126689786",
+      "email": "ishaan1935@gmail.com",
+      "email_verified": true,
+      "at_hash": "KVhg1qasH9WSNQ1jdHBtuA",
+      "name": "ishan sharma",
+      "picture": "https://lh3.googleusercontent.com/a/ACg8ocLUUX8OubPfqPcfzU3MADrJNzrtQ6r_RHvpcSvPyDu3FVOg1g=s96-c",
+      "given_name": "ishan",
+      "family_name": "sharma",
+      "iat": 1791544274,
+      "exp": 1791547874
+    }
+  }
+},
+{
+  "model": "otp_totp.totpdevice",
+  "pk": 2,
+  "fields": {
+    "user": [
+      "aadmin"
+    ],
+    "name": "default",
+    "confirmed": true,
+    "throttling_failure_timestamp": null,
+    "throttling_failure_count": 0,
+    "created_at": "2026-09-20T07:23:14.959Z",
+    "last_used_at": "2026-09-29T05:51:51.717Z",
+    "key": "02b40af691519d72ce4197d69f2793b9b1951356",
+    "step": 30,
+    "t0": 0,
+    "digits": 6,
+    "tolerance": 1,
+    "drift": 0,
+    "last_t": 59688703
+  }
+},
+{
+  "model": "otp_static.staticdevice",
+  "pk": 2,
+  "fields": {
+    "user": [
+      "aadmin"
+    ],
+    "name": "backup",
+    "confirmed": true,
+    "throttling_failure_timestamp": null,
+    "throttling_failure_count": 0,
+    "created_at": "2026-09-20T07:49:09.752Z",
+    "last_used_at": null
+  }
+},
+{
+  "model": "otp_static.statictoken",
+  "pk": 1,
+  "fields": {
+    "device": 2,
+    "token": "uv7uanly"
+  }
+},
+{
+  "model": "otp_static.statictoken",
+  "pk": 2,
+  "fields": {
+    "device": 2,
+    "token": "yjsb77md"
+  }
+},
+{
+  "model": "otp_static.statictoken",
+  "pk": 3,
+  "fields": {
+    "device": 2,
+    "token": "2teu7xzz"
+  }
+},
+{
+  "model": "otp_static.statictoken",
+  "pk": 4,
+  "fields": {
+    "device": 2,
+    "token": "hwp56xun"
+  }
+},
+{
+  "model": "otp_static.statictoken",
+  "pk": 5,
+  "fields": {
+    "device": 2,
+    "token": "yvj3q56c"
+  }
+},
+{
+  "model": "otp_static.statictoken",
+  "pk": 6,
+  "fields": {
+    "device": 2,
+    "token": "bmgsctvi"
+  }
+},
+{
+  "model": "otp_static.statictoken",
+  "pk": 7,
+  "fields": {
+    "device": 2,
+    "token": "6xx4gehf"
+  }
+},
+{
+  "model": "otp_static.statictoken",
+  "pk": 8,
+  "fields": {
+    "device": 2,
+    "token": "mpzipfh4"
+  }
+},
+{
+  "model": "otp_static.statictoken",
+  "pk": 9,
+  "fields": {
+    "device": 2,
+    "token": "ov3ygxmn"
+  }
+},
+{
+  "model": "otp_static.statictoken",
+  "pk": 10,
+  "fields": {
+    "device": 2,
+    "token": "rfnxytkd"
+  }
+},
+{
+  "model": "phonenumber.phonedevice",
+  "pk": 1,
+  "fields": {
+    "user": [
+      "aadmin"
+    ],
+    "name": "Ishan Moto Edge Fusion",
+    "confirmed": true,
+    "throttling_failure_timestamp": null,
+    "throttling_failure_count": 0,
+    "number": "+918847066933",
+    "key": "c5d3b04e577cbcdff891e273ee84db778d2cc129",
+    "method": "sms"
+  }
+},
+{
+  "model": "phonenumber.phonedevice",
+  "pk": 2,
+  "fields": {
+    "user": [
+      "aadmin"
+    ],
+    "name": "backup",
+    "confirmed": true,
+    "throttling_failure_timestamp": null,
+    "throttling_failure_count": 0,
+    "number": "+918847066933",
+    "key": "58d806c555d65ead9c756cf1599553d63aa14387",
+    "method": "sms"
+  }
+},
+{
+  "model": "phonenumber.phonedevice",
+  "pk": 3,
+  "fields": {
+    "user": [
+      "aadmin"
+    ],
+    "name": "backup",
+    "confirmed": true,
+    "throttling_failure_timestamp": null,
+    "throttling_failure_count": 0,
+    "number": "+918847066933",
+    "key": "e7f8a8a98aca5fb5c0dcfe53b309d606cd74e367",
+    "method": "sms"
+  }
+},
+{
+  "model": "phonenumber.phonedevice",
+  "pk": 4,
+  "fields": {
+    "user": [
+      "aadmin"
+    ],
+    "name": "backup",
+    "confirmed": true,
+    "throttling_failure_timestamp": null,
+    "throttling_failure_count": 0,
+    "number": "+918847066933",
+    "key": "b8c54225b3f9b127bbbcc8b0f868a6ff197ffdce",
+    "method": "sms"
+  }
+},
+{
+  "model": "store.category",
+  "pk": 1,
+  "fields": {
+    "name": "SciFi",
+    "created_at": "2026-09-01T05:52:08.117Z"
+  }
+},
+{
+  "model": "store.category",
+  "pk": 2,
+  "fields": {
+    "name": "Musical Biography",
+    "created_at": "2026-09-01T05:52:46.109Z"
+  }
+},
+{
+  "model": "store.category",
+  "pk": 3,
+  "fields": {
+    "name": "Comics",
+    "created_at": "2026-09-01T05:52:53.305Z"
+  }
+},
+{
+  "model": "store.category",
+  "pk": 4,
+  "fields": {
+    "name": "Sports",
+    "created_at": "2026-09-01T05:52:59.418Z"
+  }
+},
+{
+  "model": "store.category",
+  "pk": 5,
+  "fields": {
+    "name": "Music",
+    "created_at": "2026-09-01T05:53:09.540Z"
+  }
+},
+{
+  "model": "store.category",
+  "pk": 6,
+  "fields": {
+    "name": "Religious",
+    "created_at": "2026-09-01T05:54:20.960Z"
+  }
+},
+{
+  "model": "store.category",
+  "pk": 7,
+  "fields": {
+    "name": "Non Fiction",
+    "created_at": "2026-09-01T05:54:38.197Z"
+  }
+},
+{
+  "model": "store.category",
+  "pk": 8,
+  "fields": {
+    "name": "Financial",
+    "created_at": "2026-09-01T05:55:19.190Z"
+  }
+},
+{
+  "model": "store.category",
+  "pk": 9,
+  "fields": {
+    "name": "Self-Help",
+    "created_at": "2026-09-01T06:01:16.880Z"
+  }
+},
+{
+  "model": "store.category",
+  "pk": 10,
+  "fields": {
+    "name": "Prose Fiction",
+    "created_at": "2026-09-01T19:58:38.793Z"
+  }
+},
+{
+  "model": "store.covertype",
+  "pk": 1,
+  "fields": {
+    "name": "Soft Cover",
+    "created_at": "2026-09-01T06:56:40.948Z"
+  }
+},
+{
+  "model": "store.covertype",
+  "pk": 2,
+  "fields": {
+    "name": "Hard Cover",
+    "created_at": "2026-09-01T06:56:55.520Z"
+  }
+},
+{
+  "model": "store.covertype",
+  "pk": 3,
+  "fields": {
+    "name": "Printed Cover",
+    "created_at": "2026-09-01T07:47:33.936Z"
+  }
+},
+{
+  "model": "store.covertype",
+  "pk": 4,
+  "fields": {
+    "name": "Plain Cover",
+    "created_at": "2026-09-01T07:47:44.755Z"
+  }
+},
+{
+  "model": "store.product",
+  "pk": 1,
+  "fields": {
+    "title": "The Jungle Book Vol.1",
+    "desc": "The Jungle Book stories by Rudyard Kipling have inspired many comic book adaptations and graphic novels over the decades..P. Craig Russell’s Jungle Book Stories (1997): This acclaimed work collects beautifully detailed comic adaptations of stories from The Second Jungle Book, originally Set in the dry forests of India, the narrative primarily follows Mowgli, an orphaned \"man-cub\" raised by wolves, alongside legendary animal characters like Baloo the bear and Bagheera the panther.",
+    "price": 550.0,
+    "author": "P. Craig Russell",
+    "isbn": "3456789876",
+    "publication_year": 1997,
+    "category": 3,
+    "cover_type": 2,
+    "digital": false,
+    "is_featured": true,
+    "is_bestseller": false,
+    "stock_quantity": 264,
+    "image": "JugleBook.jpg"
+  }
+},
+{
+  "model": "store.product",
+  "pk": 2,
+  "fields": {
+    "title": "The Great Gatsby by Franc",
+    "desc": "The literary legacy of F. Scott Fitzgerald's masterpiece is heavily tied to its visual presentations. The most legendary imagery stems from Francis Cugat’s original 1925 dust jacket art, titled Celestial Eyes, which portrays disembodied eyes hovering over the bright neon lights of a Jazz Age amusement park.",
+    "price": 899.0,
+    "author": "F. Scott Fitzgerald",
+    "isbn": "6543345671",
+    "publication_year": 1925,
+    "category": 5,
+    "cover_type": 3,
+    "digital": false,
+    "is_featured": true,
+    "is_bestseller": false,
+    "stock_quantity": 225,
+    "image": "GreatGasby.jpg"
+  }
+},
+{
+  "model": "store.product",
+  "pk": 3,
+  "fields": {
+    "title": "The Sapiens",
+    "desc": "Sapiens: A Brief History of Humankind is a multi-million-copy international bestselling book written by Israeli historian Yuval Noah Harari. Spanning roughly 70,000 years of human history, the narrative seamlessly fuses natural sciences with social sciences to explain how an insignificant ape evolved to dominate planet Earth. Furthermore, he warns that through fast-advancing fields like biotechnology and artificial intelligence, Homo sapiens will likely upgrade or design themselves into entirely different, non-biological entities within a matter of centuries—bringing a definitive end to Sapiens history.",
+    "price": 799.0,
+    "author": "Yuval Noah Harari",
+    "isbn": "654334567-10",
+    "publication_year": 2011,
+    "category": 7,
+    "cover_type": 2,
+    "digital": false,
+    "is_featured": true,
+    "is_bestseller": false,
+    "stock_quantity": 300,
+    "image": "Sapiens.jpg"
+  }
+},
+{
+  "model": "store.product",
+  "pk": 4,
+  "fields": {
+    "title": "Don Quixote",
+    "desc": "Don Quixote by Miguel de Cervantes is famous because it is widely considered the first modern novel and a masterclass in exploring the conflict b/w human idealism and harsh reality.The Art of Becoming: Unlike epic heroes (Achilles or Odysseus) who stay the same from start to end, Don Quixote and his squire Sancho Panza , learn, and grow & change as people through their experiences.The book dives deep into how individuals perceive the world versus how the world actually is, in later prose fiction.",
+    "price": 499.0,
+    "author": "Miguel de Cervantes",
+    "isbn": "654334567-19",
+    "publication_year": 1605,
+    "category": 10,
+    "cover_type": 3,
+    "digital": false,
+    "is_featured": true,
+    "is_bestseller": false,
+    "stock_quantity": 150,
+    "image": "DonQuixote.avif"
+  }
+},
+{
+  "model": "store.product",
+  "pk": 5,
+  "fields": {
+    "title": "Musafir Cafe",
+    "desc": "The Musafir Cafe novel release year & imagesThe bestselling Hindi novel Musafir Cafe by Divya Prakash Dubey was originally published in 2016, with subsequent popular editions released in May 2022. Following its massive success, the official English translation and its highly anticipated Netflix web series adaptation debuted in 2026.Genre: Contemporary romantic fiction.Format: Modern prose written in ordinary, continuous narrative language (prose) rather than poetry or verse, and it tells an imagined story (fiction) Urban relationships, modern love, and career-versus-heart dilemmas.",
+    "price": 299.0,
+    "author": "Divya Prakash Dubey",
+    "isbn": "654334567-07",
+    "publication_year": 2015,
+    "category": 10,
+    "cover_type": 3,
+    "digital": false,
+    "is_featured": true,
+    "is_bestseller": false,
+    "stock_quantity": 350,
+    "image": "Musafir_Cafe.jpg"
+  }
+},
+{
+  "model": "store.product",
+  "pk": 6,
+  "fields": {
+    "title": "Great Expectations",
+    "desc": "Great Expectations by Charles Dickens is a famous 19th-century prose fiction masterpiece that tracks the life, ambition, and moral growth of an orphan named Pip.Pip grows up in rural Kent under the harsh care of his sister and her gentle blacksmith husband, Joe Gargery. His life shifts forever after two encounters: helping an escaped convict named Abel Magwitch, and being hired to visit the bitter, wedding-dress-wearing spinster Miss Havisham and her cruel but beautiful adopted daughter, Estella",
+    "price": 234.0,
+    "author": "Charles Dickens",
+    "isbn": "654334567-00",
+    "publication_year": 1861,
+    "category": 10,
+    "cover_type": 3,
+    "digital": false,
+    "is_featured": true,
+    "is_bestseller": false,
+    "stock_quantity": 200,
+    "image": "GreatExpectations.jpg"
+  }
+},
+{
+  "model": "store.product",
+  "pk": 7,
+  "fields": {
+    "title": "Hard Times",
+    "desc": "Hard Times (originally published in 1854) is Charles Dickens's tenth novel. It stands out as his shortest novel and one of his sharpest pieces of social satire. The book critiques the harsh social and economic conditions of mid-19th-century industrial England.The novel begins with Mr. Thomas Gradgrind sternly lecturing a room full of school children on the importance of facts, and not imagination or emotion, are the key to a good education, and he educates all the children of the school and his own children, Louisa and Tom. When one of his worst students, Sissy Jupe, is abandoned by her father (a circus performer), Mr. Gradgrind takes in Sissy to educate her along with his children according to his sacred system of facts.",
+    "price": 450.0,
+    "author": "Charles Dickens",
+    "isbn": "654334567-08",
+    "publication_year": 1854,
+    "category": 10,
+    "cover_type": 3,
+    "digital": false,
+    "is_featured": true,
+    "is_bestseller": false,
+    "stock_quantity": 120,
+    "image": "HardTimesByCharles.jpg"
+  }
+},
+{
+  "model": "store.product",
+  "pk": 8,
+  "fields": {
+    "title": "Rich Dad Poor Dad",
+    "desc": "Rich Dad Poor Dad by Robert T. Kiyosaki and Sharon Lechter was originally published on April 8, 1997. It has gone on to become the number-one personal finance book of all time, selling over 44 million copies worldwide.Rich Dad Poor Dad is a foundational personal finance book framed as a memoir. It details Kiyosaki's upbringing in Hawaii and highlights the starkly different financial mindsets of the two influential father figures in his life.The father of his best friend, who was a high school dropout but a highly street-smart entrepreneur and  He went on to become one of the wealthiest individuals in Hawaii by learning how to build assets and make money work for him.",
+    "price": 555.0,
+    "author": "Robert T. Kiyosaki",
+    "isbn": "654334567-54",
+    "publication_year": 1997,
+    "category": 8,
+    "cover_type": 1,
+    "digital": false,
+    "is_featured": true,
+    "is_bestseller": false,
+    "stock_quantity": 555,
+    "image": "RDPD.jpg"
+  }
+},
+{
+  "model": "store.product",
+  "pk": 9,
+  "fields": {
+    "title": "The Power of Your Subconscious Mind",
+    "desc": "The Power of Your Subconscious Mind by Dr. Joseph Murphy was originally published in 1963. It is important to note that it is not a novel (prose fiction), but rather a seminal non-fiction self-help and spiritual guide that has sold millions of copies globally.",
+    "price": 333.0,
+    "author": "Dr. Joseph Murphy",
+    "isbn": "654334567-05",
+    "publication_year": 1963,
+    "category": 9,
+    "cover_type": 3,
+    "digital": false,
+    "is_featured": true,
+    "is_bestseller": false,
+    "stock_quantity": 222,
+    "image": "TPSMind.jpg"
+  }
+},
+{
+  "model": "store.product",
+  "pk": 10,
+  "fields": {
+    "title": "Atomic Habits",
+    "desc": "Atomic Habits was published on October 16, 2018. It is important to note that it is not a novel (prose fiction), but an international bestselling non-fiction self-help and behavioral psychology guide written by James Clear.The core premise of Atomic Habits is that real, life-altering change does not come from overnight overhauls or grand, fleeting bursts of willpower. Instead, it stems from the compound effect of tiny, seemingly insignificant daily choices",
+    "price": 399.0,
+    "author": "James Clear",
+    "isbn": "654334567-12",
+    "publication_year": 2018,
+    "category": 9,
+    "cover_type": 3,
+    "digital": false,
+    "is_featured": true,
+    "is_bestseller": false,
+    "stock_quantity": 200,
+    "image": "AtomicHabits.jpg"
+  }
+},
+{
+  "model": "store.product",
+  "pk": 11,
+  "fields": {
+    "title": "The BhagvadGita",
+    "desc": "The Bhagavad Gita (meaning \"The Song of God\") is a 700-verse, 18-chapter sacred Hindu scripture written in Epic Sanskrit. It is an integral segment of the ancient Indian epic, the Mahabharata (specifically occupying chapters 23 to 40 of Book VI, the Bhishma Parva). It is a work of sacred philosophical scripture and epic poetry. According to the Hindu spiritual epics, the events took place at the transition between the Dvapara Yuga and Kali Yuga, dating the spoken delivery of the text to approximately 3102 BCE–3067 BCE (making the spoken discourse roughly 5,100 years old)",
+    "price": 250.0,
+    "author": "Ved Vyas",
+    "isbn": "654334567-20",
+    "publication_year": 1966,
+    "category": 6,
+    "cover_type": 3,
+    "digital": false,
+    "is_featured": true,
+    "is_bestseller": false,
+    "stock_quantity": 990,
+    "image": "shrimad_bhagavad_gita.jpeg"
+  }
+},
+{
+  "model": "store.customer",
+  "pk": 1,
+  "fields": {
+    "name": "Vanshika",
+    "email": "rvanshika@gmail.com",
+    "user": [
+      "Rvanshika"
+    ],
+    "phonenumber": "9815566933"
+  }
+},
+{
+  "model": "store.customer",
+  "pk": 2,
+  "fields": {
+    "name": "Ishan sharma",
+    "email": "mickey1935@gmail.com",
+    "user": [
+      "IshaanS"
+    ],
+    "phonenumber": "09815581935"
+  }
+},
+{
+  "model": "store.customer",
+  "pk": 3,
+  "fields": {
+    "name": "Ishan aadmin",
+    "email": "ishaan1934@gmail.com",
+    "user": [
+      "aadmin"
+    ],
+    "phonenumber": "+918847066955"
+  }
+},
+{
+  "model": "store.customer",
+  "pk": 4,
+  "fields": {
+    "name": "Mickey S",
+    "email": "mickey1935mmj@gmail.com",
+    "user": [
+      "ishaan"
+    ],
+    "phonenumber": "8847065534"
+  }
+},
+{
+  "model": "store.customer",
+  "pk": 5,
+  "fields": {
+    "name": "Eshan V",
+    "email": "ishaan1935@gmail.com",
+    "user": [
+      "ishan"
+    ],
+    "phonenumber": "08847066933"
+  }
+},
+{
+  "model": "store.order",
+  "pk": 18,
+  "fields": {
+    "customer": 3,
+    "date_created": "2026-09-14T04:36:15.155Z",
+    "complete": true,
+    "stripe_session_id": "cs_test_b1gr5Cz498IstR6kcM7R6W9fpKePEPZqujshdNRRCOODArOM9VZegiJYXn",
+    "transaction_id": null
+  }
+},
+{
+  "model": "store.order",
+  "pk": 20,
+  "fields": {
+    "customer": 3,
+    "date_created": "2026-09-17T04:23:06.461Z",
+    "complete": true,
+    "stripe_session_id": "cs_test_b1fRCbXi6WsQ7G95owpGySQZGV8s54g1RYDdNtDJ6nx1mO9vbplTSNH32j",
+    "transaction_id": "pi_3UGWzvI3cPPsIIDc1Nri0OvP"
+  }
+},
+{
+  "model": "store.order",
+  "pk": 21,
+  "fields": {
+    "customer": 3,
+    "date_created": "2026-09-17T04:37:22.577Z",
+    "complete": true,
+    "stripe_session_id": "cs_test_b1ja9r4sxAUM3yjnXbQyRroGJBlj0YZtpkPEl0Iq0Kmlo8dy9hyAiWsiep",
+    "transaction_id": "pi_3UHyjHI3cPPsIIDc0Xm0wNf8"
+  }
+},
+{
+  "model": "store.order",
+  "pk": 22,
+  "fields": {
+    "customer": 3,
+    "date_created": "2026-09-25T04:29:16.658Z",
+    "complete": true,
+    "stripe_session_id": "cs_test_a18Ux3QLIM6QHXGmJiF6yhF4PXcSmNyvyp0E8DQkwKidiWKQMY8alyenjL",
+    "transaction_id": "pi_3UJRfeI3cPPsIIDc1ElCsM1y"
+  }
+},
+{
+  "model": "store.order",
+  "pk": 23,
+  "fields": {
+    "customer": 3,
+    "date_created": "2026-09-25T06:15:44.646Z",
+    "complete": true,
+    "stripe_session_id": "cs_test_b1HuFVOFNDmfkYAWsfC3cHt825526KVOF3Pl9APHXA6s3UdTur71COz1oj",
+    "transaction_id": "pi_3UJSV1I3cPPsIIDc0axSxdht"
+  }
+},
+{
+  "model": "store.order",
+  "pk": 24,
+  "fields": {
+    "customer": 3,
+    "date_created": "2026-09-25T06:59:18.827Z",
+    "complete": true,
+    "stripe_session_id": "cs_test_b1R4R4dFcEk8dT1FbcVNlDR6qkxvauAzlhF4IhzCib5GCai2MPEfKvNHK9",
+    "transaction_id": "pi_3UJX4KI3cPPsIIDc1UAZF6Oa"
+  }
+},
+{
+  "model": "store.order",
+  "pk": 25,
+  "fields": {
+    "customer": 3,
+    "date_created": "2026-09-25T12:26:29.843Z",
+    "complete": true,
+    "stripe_session_id": "cs_test_b16XwF9ZoJ7MBNL1X7RajaVPtBU8aCEdulFXHkeuJQxMoRC0LoZnyXSQbi",
+    "transaction_id": "pi_3UJYGdI3cPPsIIDc0HEZzY7v"
+  }
+},
+{
+  "model": "store.order",
+  "pk": 27,
+  "fields": {
+    "customer": 5,
+    "date_created": "2026-09-29T05:02:56.603Z",
+    "complete": true,
+    "stripe_session_id": "cs_test_b1dqr5PUt5qMI0mDL9MdC91lkcpXnrMP8v6SJRk1hKm8y8cVN03qCERt3O",
+    "transaction_id": "pi_3UNn6hI3cPPsIIDc1ecuw0XH"
+  }
+},
+{
+  "model": "store.order",
+  "pk": 28,
+  "fields": {
+    "customer": 3,
+    "date_created": "2026-10-07T07:28:48.455Z",
+    "complete": true,
+    "stripe_session_id": "cs_test_a1ceD12m3EVFi8LLZe66TPWM03R5ByGmAjwEAKuXjRLAFD3rOSMGSeLG9a",
+    "transaction_id": "pi_3UQIVEI3cPPsIIDc0i8QeVtD"
+  }
+},
+{
+  "model": "store.order",
+  "pk": 29,
+  "fields": {
+    "customer": 5,
+    "date_created": "2026-10-08T11:10:40.371Z",
+    "complete": false,
+    "stripe_session_id": null,
+    "transaction_id": null
+  }
+},
+{
+  "model": "store.order",
+  "pk": 30,
+  "fields": {
+    "customer": 3,
+    "date_created": "2026-10-14T03:09:03.838Z",
+    "complete": true,
+    "stripe_session_id": "cs_test_b1Un6befl6KK2cPvEPE66IpPCUrjB613BQHJ4c2wox60MAXXY5wQivP5pe",
+    "transaction_id": "pi_3UQIZtI3cPPsIIDc1UahsVJk"
+  }
+},
+{
+  "model": "store.order",
+  "pk": 31,
+  "fields": {
+    "customer": 3,
+    "date_created": "2026-10-14T03:18:50.042Z",
+    "complete": true,
+    "stripe_session_id": "cs_test_b1fBxNFG6AdjjUvl6G75eHN0zS6Z8HOqqY0uZtUF98c9eQEAmqSE3Pai65",
+    "transaction_id": "pi_3UQLKbI3cPPsIIDc1Ughd4Ps"
+  }
+},
+{
+  "model": "store.order",
+  "pk": 32,
+  "fields": {
+    "customer": 3,
+    "date_created": "2026-10-14T06:07:45.799Z",
+    "complete": true,
+    "stripe_session_id": "cs_test_b1W3ZiJO2SONF5NSDXplEzf1gjDfsuImfCpMpO2LJHE8nMbfhp88AycMmX",
+    "transaction_id": "pi_3UQQUzI3cPPsIIDc0WLKEju5"
+  }
+},
+{
+  "model": "store.order",
+  "pk": 33,
+  "fields": {
+    "customer": 3,
+    "date_created": "2026-10-14T11:42:35.362Z",
+    "complete": true,
+    "stripe_session_id": "cs_test_a1b5MzpzGcHiMBClxV18Z6ssd4pBF1cOihPIuXsHR6qn9pw7sCYSXnHoxT",
+    "transaction_id": "pi_3UQQamI3cPPsIIDc1U7tgxr5"
+  }
+},
+{
+  "model": "store.orderitems",
+  "pk": 53,
+  "fields": {
+    "order": 18,
+    "product": 6,
+    "quantity": 1,
+    "checked": false,
+    "transaction_id": null
+  }
+},
+{
+  "model": "store.orderitems",
+  "pk": 54,
+  "fields": {
+    "order": 18,
+    "product": 5,
+    "quantity": 1,
+    "checked": false,
+    "transaction_id": null
+  }
+},
+{
+  "model": "store.orderitems",
+  "pk": 55,
+  "fields": {
+    "order": 18,
+    "product": 8,
+    "quantity": 1,
+    "checked": true,
+    "transaction_id": null
+  }
+},
+{
+  "model": "store.orderitems",
+  "pk": 56,
+  "fields": {
+    "order": 18,
+    "product": 4,
+    "quantity": 1,
+    "checked": false,
+    "transaction_id": null
+  }
+},
+{
+  "model": "store.orderitems",
+  "pk": 57,
+  "fields": {
+    "order": 18,
+    "product": 11,
+    "quantity": 1,
+    "checked": true,
+    "transaction_id": null
+  }
+},
+{
+  "model": "store.orderitems",
+  "pk": 60,
+  "fields": {
+    "order": 20,
+    "product": 10,
+    "quantity": 1,
+    "checked": false,
+    "transaction_id": null
+  }
+},
+{
+  "model": "store.orderitems",
+  "pk": 61,
+  "fields": {
+    "order": 20,
+    "product": 4,
+    "quantity": 1,
+    "checked": true,
+    "transaction_id": null
+  }
+},
+{
+  "model": "store.orderitems",
+  "pk": 62,
+  "fields": {
+    "order": 20,
+    "product": 2,
+    "quantity": 1,
+    "checked": false,
+    "transaction_id": null
+  }
+},
+{
+  "model": "store.orderitems",
+  "pk": 63,
+  "fields": {
+    "order": 20,
+    "product": 6,
+    "quantity": 1,
+    "checked": true,
+    "transaction_id": null
+  }
+},
+{
+  "model": "store.orderitems",
+  "pk": 64,
+  "fields": {
+    "order": 21,
+    "product": 6,
+    "quantity": 1,
+    "checked": true,
+    "transaction_id": null
+  }
+},
+{
+  "model": "store.orderitems",
+  "pk": 65,
+  "fields": {
+    "order": 21,
+    "product": 5,
+    "quantity": 1,
+    "checked": true,
+    "transaction_id": null
+  }
+},
+{
+  "model": "store.orderitems",
+  "pk": 68,
+  "fields": {
+    "order": 22,
+    "product": 5,
+    "quantity": 1,
+    "checked": true,
+    "transaction_id": null
+  }
+},
+{
+  "model": "store.orderitems",
+  "pk": 70,
+  "fields": {
+    "order": 23,
+    "product": 2,
+    "quantity": 3,
+    "checked": true,
+    "transaction_id": null
+  }
+},
+{
+  "model": "store.orderitems",
+  "pk": 72,
+  "fields": {
+    "order": 23,
+    "product": 5,
+    "quantity": 1,
+    "checked": true,
+    "transaction_id": null
+  }
+},
+{
+  "model": "store.orderitems",
+  "pk": 73,
+  "fields": {
+    "order": 23,
+    "product": 6,
+    "quantity": 2,
+    "checked": true,
+    "transaction_id": null
+  }
+},
+{
+  "model": "store.orderitems",
+  "pk": 74,
+  "fields": {
+    "order": 24,
+    "product": 10,
+    "quantity": 1,
+    "checked": true,
+    "transaction_id": null
+  }
+},
+{
+  "model": "store.orderitems",
+  "pk": 75,
+  "fields": {
+    "order": 24,
+    "product": 6,
+    "quantity": 1,
+    "checked": true,
+    "transaction_id": null
+  }
+},
+{
+  "model": "store.orderitems",
+  "pk": 76,
+  "fields": {
+    "order": 25,
+    "product": 5,
+    "quantity": 2,
+    "checked": true,
+    "transaction_id": null
+  }
+},
+{
+  "model": "store.orderitems",
+  "pk": 78,
+  "fields": {
+    "order": 25,
+    "product": 11,
+    "quantity": 2,
+    "checked": true,
+    "transaction_id": null
+  }
+},
+{
+  "model": "store.orderitems",
+  "pk": 83,
+  "fields": {
+    "order": 27,
+    "product": 2,
+    "quantity": 2,
+    "checked": true,
+    "transaction_id": null
+  }
+},
+{
+  "model": "store.orderitems",
+  "pk": 84,
+  "fields": {
+    "order": 27,
+    "product": 6,
+    "quantity": 1,
+    "checked": true,
+    "transaction_id": null
+  }
+},
+{
+  "model": "store.orderitems",
+  "pk": 85,
+  "fields": {
+    "order": 28,
+    "product": 6,
+    "quantity": 1,
+    "checked": true,
+    "transaction_id": null
+  }
+},
+{
+  "model": "store.orderitems",
+  "pk": 87,
+  "fields": {
+    "order": 30,
+    "product": 5,
+    "quantity": 1,
+    "checked": true,
+    "transaction_id": null
+  }
+},
+{
+  "model": "store.orderitems",
+  "pk": 88,
+  "fields": {
+    "order": 30,
+    "product": 2,
+    "quantity": 1,
+    "checked": true,
+    "transaction_id": null
+  }
+},
+{
+  "model": "store.orderitems",
+  "pk": 90,
+  "fields": {
+    "order": 31,
+    "product": 8,
+    "quantity": 1,
+    "checked": true,
+    "transaction_id": null
+  }
+},
+{
+  "model": "store.orderitems",
+  "pk": 92,
+  "fields": {
+    "order": 31,
+    "product": 11,
+    "quantity": 1,
+    "checked": true,
+    "transaction_id": null
+  }
+},
+{
+  "model": "store.orderitems",
+  "pk": 93,
+  "fields": {
+    "order": 32,
+    "product": 11,
+    "quantity": 1,
+    "checked": true,
+    "transaction_id": null
+  }
+},
+{
+  "model": "store.orderitems",
+  "pk": 94,
+  "fields": {
+    "order": 32,
+    "product": 1,
+    "quantity": 1,
+    "checked": true,
+    "transaction_id": null
+  }
+},
+{
+  "model": "store.orderitems",
+  "pk": 96,
+  "fields": {
+    "order": 32,
+    "product": 5,
+    "quantity": 1,
+    "checked": true,
+    "transaction_id": null
+  }
+},
+{
+  "model": "store.orderitems",
+  "pk": 98,
+  "fields": {
+    "order": 33,
+    "product": 5,
+    "quantity": 1,
+    "checked": true,
+    "transaction_id": null
+  }
+},
+{
+  "model": "store.shippingaddress",
+  "pk": 1,
+  "fields": {
+    "customer": 3,
+    "order": 31,
+    "city": "ZIRAKPUR",
+    "state": "Baltana",
+    "address": "83, Ram ViComplex",
+    "zipcode": "140603"
+  }
+},
+{
+  "model": "store.shippingaddress",
+  "pk": 2,
+  "fields": {
+    "customer": 3,
+    "order": 32,
+    "city": "Chandigarh",
+    "state": "Chandigarh",
+    "address": "83, Ram Vihar Complex",
+    "zipcode": "140603"
+  }
+},
+{
+  "model": "store.shippingaddress",
+  "pk": 3,
+  "fields": {
+    "customer": 3,
+    "order": 32,
+    "city": "Mumbai",
+    "state": "Maharashtra",
+    "address": "83, Ram Vihar Complex",
+    "zipcode": "140603"
+  }
+},
+{
+  "model": "store.shippingaddress",
+  "pk": 4,
+  "fields": {
+    "customer": 3,
+    "order": 33,
+    "city": "Mumbai",
+    "state": "Maharashtra",
+    "address": "83, Ram Vihar Complex",
+    "zipcode": "140603"
+  }
+}
+]
