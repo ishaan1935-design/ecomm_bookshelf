@@ -33,7 +33,8 @@ ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', default_hosts).split(',')
 
 CSRF_TRUSTED_ORIGINS = [
     "https://bookmyebooks.vercel.app",
-    "https://*.vercel.app",     # allows all *.vercel.app for CSRF
+    "https://*.vercel.app",
+    "https://ecomm-bookshelf.onrender.com",  # Add your Render URL here
 ]
 
 # ------------------------------------------------------------------
