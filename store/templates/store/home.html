@@ -668,9 +668,11 @@ textarea:hover,
 </style>
 
 <!-- ========== CHATBOT TRIGGER ========== -->
+{% if user.is_authenticated %}
 <button id="chatbotToggle" aria-label="Open Customer Helpdesk">
     <i class="fas fa-comment-dots"></i>
 </button>
+{% endif %}
 
 <!-- ========== CHAT WINDOW ========== -->
 <div id="chatbotPopup">
@@ -746,14 +748,18 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 <script>
-    const API_URL = 'https://michats.runasp.net/api/Chat';
-    const CONVERSATION_API = 'https://michats.runasp.net/api/Conversation';
+const API_URL = 'https://michats.runasp.net/api/Chat';
+const CONVERSATION_API = 'https://michats.runasp.net/api/Conversation';
     let conversationId = null;
     // Create conversation when page loads
     window.onload = async function() {
         await createConversation();
     };
-    document.getElementById('chatbotToggle').onclick = async function() {
+// --- UPDATE THIS BLOCK ---
+const chatToggleBtn = document.getElementById('chatbotToggle');
+// Check if the button exists (it only exists if user is authenticated)
+if (chatToggleBtn) {
+    chatToggleBtn.onclick = async function() {
         var popup = document.getElementById('chatbotPopup');
         if (popup.style.display === 'none' || popup.style.display === '') {
             popup.style.display = 'flex';
@@ -764,6 +770,8 @@ document.addEventListener('DOMContentLoaded', function() {
             popup.style.display = 'none';
         }
     };
+}
+
     async function createConversation() {
         try {
             var response = await fetch(CONVERSATION_API, {
